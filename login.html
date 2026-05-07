@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВХОД — Cyberpulse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a080c;
+            font-family: 'Georgia', serif;
+            color: #ece0f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background: rgba(10, 8, 14, 0.9);
+            padding: 2rem;
+            border-radius: 1.8rem;
+            border: 1px solid #2a1f2e;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #b69ba5;
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            color: #c497aa;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(18, 14, 22, 0.9);
+            border: 1px solid #3a1a28;
+            border-radius: 1.5rem;
+            color: #f0dde0;
+            font-family: inherit;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #bc5a7a;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(140, 45, 70, 0.7);
+            border: 1px solid #9e3b5c;
+            border-radius: 2rem;
+            color: #f0dde0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: rgba(160, 50, 80, 0.85);
+            transform: translateY(-2px);
+        }
+
+        .error {
+            color: #c55555;
+            font-size: 0.8rem;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+
+        .success {
+            color: #6a9a5a;
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .toggle-link a {
+            color: #bc5a7a;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-hint {
+            text-align: center;
+            color: #604050;
+            font-size: 0.7rem;
+            margin-top: 1rem;
+        }
+
+        .suggestions {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(30, 18, 26, 0.6);
+            border-radius: 0.8rem;
+            display: none;
+        }
+
+        .suggestions span {
+            display: inline-block;
+            background: rgba(100, 40, 60, 0.5);
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            margin: 0.2rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: monospace;
+        }
+
+        .suggestions span:hover {
+            background: #9e3b5c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginForm">
+        <h1>ДОСТУП<span style="color:#c5457a">.</span></h1>
+        <div class="subtitle">вход в киберпространство</div>
+        <div class="error" id="loginError"></div>
+        <div class="form-group">
+            <label>@юзернейм</label>
+            <input type="text" id="username" placeholder="ваш идентификатор">
+        </div>
+        <div class="form-group">
+            <label>пароль</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <button onclick="handleLogin()">Войти</button>
+        <div class="toggle-link"><a href="#" onclick="showRegister()">→ создать аккаунт</a></div>
+        <div class="demo-hint">тест: @demo / demo123</div>
+    </div>
+
+    <div class="container" id="registerForm" style="display:none">
+        <h1>РЕГИСТРАЦИЯ<span style="color:#c5457a">.</span></h1>
+        <div class="subtitle">новый идентификатор</div>
+        <div class="error" id="registerError"></div>
+        <div class="form-group">
+            <label>@юзернейм</label>
+            <input type="text" id="regUsername" placeholder="только буквы, цифры, _">
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+        <div class="form-group">
+            <label>пароль</label>
+            <input type="password" id="regPassword" placeholder="мин. 4 символа">
+        </div>
+        <div class="form-group">
+            <label>отображаемое имя</label>
+            <input type="text" id="regDisplayName" placeholder="как вас называть">
+        </div>
+        <div class="form-group">
+            <label>о себе</label>
+            <textarea id="regBio" placeholder="расскажите о себе..."></textarea>
+        </div>
+        <button onclick="handleRegister()">Создать аккаунт</button>
+        <div class="toggle-link"><a href="#" onclick="showLogin()">← уже есть аккаунт</a></div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        let timeout;
+
+        async function handleLogin() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorDiv = document.getElementById('loginError');
+            
+            if (!username || !password) {
+                errorDiv.textContent = 'заполните все поля';
+                return;
+            }
+            
+            const result = await AuthManager.login(username, password);
+            
+            if (!result.success) {
+                errorDiv.textContent = result.error;
+                return;
+            }
+            
+            window.location.href = 'profile.html';
+        }
+
+        async function handleRegister() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const displayName = document.getElementById('regDisplayName').value.trim();
+            const bio = document.getElementById('regBio').value.trim();
+            const errorDiv = document.getElementById('registerError');
+            
+            if (!username || !password || !displayName) {
+                errorDiv.textContent = 'заполните все поля';
+                return;
+            }
+            
+            const result = await AuthManager.register(username, password, displayName, bio);
+            
+            if (!result.success) {
+                if (result.suggestions) {
+                    errorDiv.innerHTML = `${result.error}<br>попробуйте: ${result.suggestions.map(s => s).join(', ')}`;
+                } else {
+                    errorDiv.textContent = result.error;
+                }
+                return;
+            }
+            
+            errorDiv.style.color = '#6a9a5a';
+            errorDiv.textContent = 'Успешно! Вход...';
+            
+            setTimeout(async () => {
+                await AuthManager.login(username, password);
+                window.location.href = 'profile.html';
+            }, 1000);
+        }
+
+        async function checkUsername() {
+            const username = document.getElementById('regUsername').value.trim();
+            const suggestionsDiv = document.getElementById('suggestions');
+            
+            if (username.length < 3) {
+                suggestionsDiv.style.display = 'none';
+                return;
+            }
+            
+            if (AuthManager.isUsernameAvailable(username)) {
+                suggestionsDiv.style.display = 'none';
+            } else {
+                const suggestions = AuthManager.generateUsernameSuggestions(username);
+                suggestionsDiv.innerHTML = '<span>' + suggestions.join('</span> <span>') + '</span>';
+                suggestionsDiv.style.display = 'block';
+                
+                document.querySelectorAll('#suggestions span').forEach(span => {
+                    span.onclick = () => {
+                        document.getElementById('regUsername').value = span.textContent;
+                        suggestionsDiv.style.display = 'none';
+                    };
+                });
+            }
+        }
+
+        function showRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        document.getElementById('regUsername')?.addEventListener('input', () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(checkUsername, 300);
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await AuthManager.createDemoUser();
+            const session = AuthManager.loadSession();
+            if (session?.active_user) window.location.href = 'profile.html';
+            else document.getElementById('username').focus();
+        });
+
+        document.getElementById('password')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleLogin();
+        });
+    </script>
+</body>
+</html>

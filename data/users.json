@@ -1,0 +1,84 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "username": "moder",
+      "password": "9869225235",
+      "display_name": "модератор.",
+      "bio": "за вами следят.",
+      "avatar_url": "avatars/moder.png",
+      "role": "admin",
+      "joined": "2024-01-15"
+    },
+    {
+      "id": 1,
+      "username": "bio",
+      "password": "980980",
+      "display_name": "Биотрисса",
+      "bio": "Генетик-модификатор, специалист по биоинженерии.",
+      "avatar_url": "avatars/bio.png",
+      "role": "user",
+      "joined": "2024-02-20"
+    },
+    {
+      "id": 2,
+      "username": "nath",
+      "password": "890890",
+      "display_name": "Натаниэль",
+      "bio": "Хакер-фрилансер, специализация - кибербезопасность.",
+      "avatar_url": "avatars/nath.png",
+      "role": "user",
+      "joined": "2024-03-10"
+    },
+    {
+      "id": 3,
+      "username": "lacey_off",
+      "password": "531351",
+      "display_name": "Люська",
+      "bio": "Любов одна а стендов два.",
+      "avatar_url": "avatars/Lacey_off.png",
+      "role": "user",
+      "joined": "2024-04-05"
+    },
+    {
+      "id": 4,
+      "username": "flint",
+      "password": "234324",
+      "display_name": "Флинт Марлоу",
+      "bio": "Выкуривать по три пачки в день - трудный путь, но разве нам нужны легкие?",
+      "avatar_url": "avatars/flint.png",
+      "role": "user",
+      "joined": "2024-05-12"
+    },
+    {
+      "id": 5,
+      "username": "picdez",
+      "password": "050806",
+      "display_name": "Джейс",
+      "bio": "мир пешки - люди орешки.",
+      "avatar_url": "avatars/picdez.png",
+      "role": "user",
+      "joined": "2024-06-01"
+    },
+    {
+      "id": 6,
+      "username": "mr.Lewis",
+      "password": "411674",
+      "display_name": "О'Лаан.",
+      "bio": "Наша больница включает в себя: хоспис, клиническую больницу, СМП, поликлинику и все в одном здании.",
+      "avatar_url": "avatars/mr_Lewis.png",
+      "role": "user",
+      "joined": "2024-07-18"
+    },
+    {
+      "id": 7,
+      "username": "lolitaа",
+      "password": "411700",
+      "display_name": "Лола<3",
+      "bio": "Bite)/(hip",
+      "avatar_url": "avatars/lolitaа.png",
+      "role": "user",
+      "joined": "2024-08-22"
+    }
+  ]
+}

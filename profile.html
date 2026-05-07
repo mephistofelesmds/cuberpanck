@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПРОФИЛЬ — Cyberpulse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a080c;
+            font-family: 'Georgia', serif;
+            color: #ece0f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(10, 8, 14, 0.8);
+            padding: 2rem;
+            border-radius: 1.8rem;
+            border: 1px solid #2a1f2e;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #2a1f2e;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a2a4a, #3a1a28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .info h2 {
+            font-size: 1.5rem;
+        }
+
+        .info p {
+            color: #a07085;
+            margin-top: 0.3rem;
+        }
+
+        .bio {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(20, 12, 18, 0.6);
+            border-radius: 1rem;
+            font-style: italic;
+        }
+
+        .stats {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .stat {
+            background: rgba(30, 18, 26, 0.7);
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        button, .btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            border: 1px solid;
+            background: transparent;
+            color: #c497aa;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        button:hover, .btn:hover {
+            border-color: #bc5a7a;
+            color: #f0dde0;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: rgba(140, 45, 70, 0.6);
+            border-color: #9e3b5c;
+            color: #f0dde0;
+        }
+
+        .btn-danger:hover {
+            border-color: #c55555;
+            color: #c55555;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #c497aa;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .accounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .account-card {
+            background: rgba(18, 14, 22, 0.8);
+            border: 1px solid #2a1f2e;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .account-card.active {
+            border-color: #6a9a5a;
+        }
+
+        .account-card .remove {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            color: #a06060;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .account-card .remove:hover {
+            color: #c55555;
+        }
+
+        .notification {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            display: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay-content {
+            background: #0a080c;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            width: 90%;
+            max-width: 350px;
+            border: 1px solid #2a1f2e;
+        }
+
+        .overlay-content input {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <div class="avatar" id="avatar">?</div>
+            <div class="info">
+                <h2 id="displayName">—</h2>
+                <p id="usernameDisplay">@—</p>
+            </div>
+        </div>
+        
+        <div class="bio" id="bio">—</div>
+        
+        <div class="stats">
+            <span class="stat" id="roleChip">роль: user</span>
+            <span class="stat" id="joinedChip">с нами: —</span>
+            <span class="stat" id="accountsCount">аккаунтов: 1</span>
+        </div>
+
+        <div class="notification" id="notification"></div>
+
+        <div class="btn-group">
+            <a href="index.html" class="btn">← в меню</a>
+            <button class="btn-primary" onclick="openAddAccount()">+ добавить аккаунт</button>
+            <button onclick="clearSession()">очистить сессию</button>
+            <button class="btn-danger" onclick="logout()">выйти</button>
+        </div>
+
+        <div class="section-title">ПЕРЕКЛЮЧЕНИЕ АККАУНТОВ</div>
+        <div class="accounts-grid" id="accountsList"></div>
+    </div>
+
+    <div class="overlay" id="addOverlay">
+        <div class="overlay-content">
+            <h3 style="margin-bottom:1rem">добавить аккаунт</h3>
+            <input type="text" id="addUsername" placeholder="@юзернейм" style="width:100%">
+            <input type="password" id="addPassword" placeholder="пароль" style="width:100%">
+            <div style="display:flex; gap:0.5rem; margin-top:1rem">
+                <button onclick="addAccount()" style="flex:1">добавить</button>
+                <button onclick="closeOverlay()" style="flex:1">отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        let session;
+
+        async function init() {
+            session = AuthManager.loadSession();
+            if (!session?.active_user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            renderProfile();
+            renderAccounts();
+        }
+
+        function renderProfile() {
+            const user = session.active_user;
+            document.getElementById('displayName').textContent = user.display_name;
+            document.getElementById('usernameDisplay').textContent = '@' + user.username;
+            document.getElementById('bio').textContent = user.bio || 'описание не указано';
+            document.getElementById('joinedChip').textContent = 'с нами: ' + (user.joined || 'недавно');
+            document.getElementById('accountsCount').textContent = 'аккаунтов: ' + (session.available_users?.length || 1);
+            document.getElementById('avatar').textContent = (user.display_name || user.username).charAt(0).toUpperCase();
+        }
+
+        function renderAccounts() {
+            const container = document.getElementById('accountsList');
+            const users = session.available_users || [];
+            
+            if (users.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:#604050">нет добавленных аккаунтов</div>';
+                return;
+            }
+            
+            container.innerHTML = users.map(user => `
+                <div class="account-card ${user.username === session.active_user.username ? 'active' : ''}" 
+                     onclick="switchAccount('${user.username}')">
+                    ${user.username !== session.active_user.username ? 
+                        `<div class="remove" onclick="event.stopPropagation(); removeAccount('${user.username}')">×</div>` : ''}
+                    <div style="font-weight:bold">${user.display_name || user.username}</div>
+                    <div style="font-size:0.7rem; color:#806070">@${user.username}</div>
+                    ${user.username === session.active_user.username ? '<div style="font-size:0.6rem; color:#6a9a5a">● активен</div>' : ''}
+                </div>
+            `).join('');
+        }
+
+        async function switchAccount(username) {
+            const result = AuthManager.switchAccount(session, username);
+            if (result.success) {
+                session = AuthManager.loadSession();
+                renderProfile();
+                renderAccounts();
+                showNotification(`переключено на ${result.user.display_name}`, 'success');
+            }
+        }
+
+        async function addAccount() {
+            const username = document.getElementById('addUsername').value.trim();
+            const password = document.getElementById('addPassword').value.trim();
+            
+            if (!username || !password) {
+                showNotification('заполните все поля', 'error');
+                return;
+            }
+            
+            const result = await AuthManager.addAccount(session, username, password);
+            
+            if (result.success) {
+                session = AuthManager.loadSession();
+                renderProfile();
+                renderAccounts();
+                closeOverlay();
+                showNotification(`@${username} добавлен`, 'success');
+            } else if (result.user && confirm('Аккаунт уже в сессии. Переключиться?')) {
+                AuthManager.switchAccount(session, username);
+                session = AuthManager.loadSession();
+                renderProfile();
+                renderAccounts();
+                closeOverlay();
+            } else {
+                showNotification(result.error, 'error');
+            }
+        }
+
+        function removeAccount(username) {
+            if (confirm(`Удалить @${username} из сессии?`)) {
+                const result = AuthManager.removeAccount(session, username);
+                if (result.success) {
+                    session = AuthManager.loadSession();
+                    renderProfile();
+                    renderAccounts();
+                    showNotification(`@${username} удалён`, 'info');
+                } else {
+                    showNotification(result.error, 'error');
+                }
+            }
+        }
+
+        function clearSession() {
+            if (confirm('Очистить сессию? Останется только текущий аккаунт.')) {
+                AuthManager.clearSession(session);
+                session = AuthManager.loadSession();
+                renderProfile();
+                renderAccounts();
+                showNotification('сессия очищена', 'info');
+            }
+        }
+
+        function logout() {
+            if (confirm('Выйти?')) {
+                AuthManager.logout();
+                window.location.href = 'login.html';
+            }
+        }
+
+        function openAddAccount() {
+            document.getElementById('addOverlay').style.display = 'flex';
+            document.getElementById('addUsername').value = '';
+            document.getElementById('addPassword').value = '';
+        }
+
+        function closeOverlay() {
+            document.getElementById('addOverlay').style.display = 'none';
+        }
+
+        function showNotification(msg, type) {
+            const notif = document.getElementById('notification');
+            notif.textContent = msg;
+            notif.style.background = type === 'error' ? 'rgba(150,50,50,0.2)' : 'rgba(80,130,70,0.2)';
+            notif.style.display = 'block';
+            setTimeout(() => notif.style.display = 'none', 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
