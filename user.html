@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ — Cyberpulse Feed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a080c 0%, #1a0f14 100%);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #ece0f0;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(10, 8, 14, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #2a1f2e;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h2 {
+            color: #f0dde0;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #c5457a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: #b69ba5;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #c5457a;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .profile-header {
+            background: rgba(18, 14, 22, 0.8);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 1px solid #c5457a;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c5457a, #6a2a4a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            border: 3px solid #c5457a;
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            color: #f0dde0;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-username {
+            color: #806070;
+            margin-bottom: 1rem;
+        }
+
+        .profile-bio {
+            color: #b69ba5;
+            font-style: italic;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2a1f2e;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #c5457a;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #604050;
+            letter-spacing: 1px;
+        }
+
+        .post {
+            background: rgba(18, 14, 22, 0.8);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #2a1f2e;
+        }
+
+        .post-content {
+            color: #b69ba5;
+            line-height: 1.6;
+        }
+
+        .post-date {
+            font-size: 0.7rem;
+            color: #604050;
+            margin-top: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: #604050;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .profile-name {
+                font-size: 1.3rem;
+            }
+            
+            .profile-stats {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>ГОРОДСКОЙ <span>ФОРУМ</span></h2>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="forum.html" class="nav-link" style="color: #c5457a;">Форум</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="profileContainer">
+        <div class="empty-state">Загрузка...</div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('id');
+            
+            if (!userId) {
+                window.location.href = 'forum.html';
+                return;
+            }
+            
+            try {
+                const user = await API.getUser(userId);
+                const posts = await API.getUserPosts(userId);
+                
+                renderProfile(user, posts);
+            } catch (error) {
+                document.getElementById('profileContainer').innerHTML = '<div class="empty-state">Пользователь не найден</div>';
+            }
+        }
+
+        function renderProfile(user, posts) {
+            const container = document.getElementById('profileContainer');
+            const initial = (user.display_name || user.username).charAt(0).toUpperCase();
+            
+            container.innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar">${initial}</div>
+                    <h1 class="profile-name">${user.display_name || user.username}</h1>
+                    <div class="profile-username">@${user.username}</div>
+                    <div class="profile-bio">${user.bio || 'Описание не указано'}</div>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value">${posts.length}</div>
+                            <div class="stat-label">ПУБЛИКАЦИЙ</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">${formatDate(user.joined)}</div>
+                            <div class="stat-label">С НАМИ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="posts-list">
+                    ${posts.length === 0 ? '<div class="empty-state">Нет публикаций</div>' : posts.map(post => `
+                        <div class="post">
+                            <div class="post-content">${escapeHtml(post.content)}</div>
+                            <div class="post-date">${formatFullDate(post.createdAt)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'недавно';
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const days = Math.floor(diff / 86400000);
+            
+            if (days === 0) return 'сегодня';
+            if (days === 1) return 'вчера';
+            return `${days} дн назад`;
+        }
+
+        function formatFullDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

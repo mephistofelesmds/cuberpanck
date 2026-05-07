@@ -1,0 +1,73 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "authorId": 1,
+      "authorName": "Демо-пользователь",
+      "authorUsername": "demo",
+      "authorAvatar": null,
+      "content": "Добро пожаловать в Городской форум! Здесь можно делиться новостями, мыслями и общаться с другими жителями.",
+      "image": null,
+      "likes": 5,
+      "likedBy": [2, 3],
+      "commentsCount": 2,
+      "createdAt": "2024-01-15T10:30:00Z",
+      "updatedAt": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "authorId": 2,
+      "authorName": "Киберпанк",
+      "authorUsername": "cyber_neon",
+      "authorAvatar": null,
+      "content": "Кто видел новый нейро-интерфейс от корпорации? Говорят, он может читать мысли!",
+      "image": null,
+      "likes": 3,
+      "likedBy": [1],
+      "commentsCount": 1,
+      "createdAt": "2024-01-16T14:20:00Z",
+      "updatedAt": "2024-01-16T14:20:00Z"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "postId": 1,
+      "authorId": 2,
+      "authorName": "Киберпанк",
+      "authorUsername": "cyber_neon",
+      "content": "Отличный форум! Давно ждал такое место.",
+      "createdAt": "2024-01-15T11:00:00Z"
+    },
+    {
+      "id": 2,
+      "postId": 1,
+      "authorId": 3,
+      "authorName": "Shadow Walker",
+      "authorUsername": "shadow_99",
+      "content": "Наконец-то живое общение!",
+      "createdAt": "2024-01-15T12:30:00Z"
+    },
+    {
+      "id": 3,
+      "postId": 2,
+      "authorId": 1,
+      "authorName": "Демо-пользователь",
+      "authorUsername": "demo",
+      "content": "Слышал, но цена космическая...",
+      "createdAt": "2024-01-16T15:45:00Z"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "demo",
+      "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "display_name": "Демо-пользователь",
+      "bio": "Тестовый аккаунт",
+      "avatar_url": null,
+      "role": "user",
+      "joined": "2024-01-15"
+    }
+  ]
+}

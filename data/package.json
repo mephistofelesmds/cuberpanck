@@ -1,0 +1,12 @@
+{
+  "name": "cyberpulse-forum",
+  "version": "1.0.0",
+  "description": "Cyberpulse Forum Social Network",
+  "scripts": {
+    "server": "json-server --watch db.json --port 3000 --host 0.0.0.0",
+    "server-auth": "json-server --watch db.json --port 3000 --host 0.0.0.0 --middlewares ./server.js"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}

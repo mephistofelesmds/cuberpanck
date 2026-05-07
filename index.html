@@ -854,87 +854,87 @@
     <script src="search-simple.js"></script>
     
     <script>
-        // Данные для навигации
+        // Данные для навигацииЫ
         const navData = [
             { 
-                label: "FEED", 
-                title: "Main News Feed", 
-                desc: "Real-time events from cyberspace and reality.",
+                label: "ЛЕНТА", 
+                title: "Главная лента новостей", 
+                desc: "Актуальные события киберпространства и реальности в реальном времени.",
                 url: "news.html",
                 available: true,
-                tags: ["#Feed", "#News", "#Live"]
+                tags: ["#Лента", "#Новости", "#Live"]
             },
             { 
-                label: "EXCLUSIVE", 
-                title: "Exclusive Materials", 
-                desc: "Classified data, leaks, and information from unverified sources.",
+                label: "ЭКСКЛЮЗИВ", 
+                title: "Эксклюзивные материалы", 
+                desc: "Засекреченные данные, утечки и информация из непроверенных источников.",
                 url: "exclusive.html",
                 available: true,
-                tags: ["#Exclusive", "#Classified", "#Leaks"]
+                tags: ["#Эксклюзив", "#Секретно", "#Утечки"]
             },
             { 
-                label: "CORPORATE", 
-                title: "Corporations & Technology", 
-                desc: "Megacorporations, new tech, mergers and acquisitions.",
+                label: "КОРПОРАЦИИ", 
+                title: "Корпорации и технологии", 
+                desc: "Мегакорпорации, новые технологии, слияния и поглощения.",
                 url: "corporate.html",
                 available: true,
-                tags: ["#Corporations", "#Tech", "#Business"]
+                tags: ["#Корпорации", "#Технологии", "#Бизнес"]
             },
             { 
-                label: "POLITICS", 
-                title: "Politics & Power", 
-                desc: "City administration, laws, regulations and underhand games.",
+                label: "ВЛАСТЬ", 
+                title: "Политика и власть", 
+                desc: "Городская администрация, законы, постановления и подковёрные игры.",
                 url: "politics.html",
                 available: true,
-                tags: ["#Politics", "#Power", "#Laws"]
+                tags: ["#Политика", "#Власть", "#Законы"]
             },
             { 
-                label: "CRIME", 
-                title: "Incidents & Crime", 
-                desc: "Street gangs, cybercrimes, investigations and case archives.",
+                label: "КРИМИНАЛ", 
+                title: "Происшествия и криминал", 
+                desc: "Уличные банды, киберпреступления, расследования и архив дел.",
                 url: "incidents.html",
                 available: true,
-                tags: ["#Crime", "#Incidents", "#Investigations"]
+                tags: ["#Криминал", "#Происшествия", "#Расследования"]
             },
             { 
-                label: "CULTURE", 
-                title: "Culture & Entertainment", 
-                desc: "Neuro-art, holo-concerts, synth-music and fashion.",
+                label: "КУЛЬТУРА", 
+                title: "Культура и развлечения", 
+                desc: "Нейро-искусство, голо-концерты, синт-музыка и мода.",
                 url: "culture.html",
                 available: true,
-                tags: ["#Culture", "#Art", "#Music"]
+                tags: ["#Культура", "#Искусство", "#Музыка"]
             },
             {  
-                label: "CITY LIFE", 
-                title: "City Forum", 
-                desc: "Post survival tips, announcements, find useful contacts. Your voice matters!",
+                label: "ЖИЗНЬ ГОРОДА", 
+                title: "Городской форум", 
+                desc: "Публикуйте советы по выживанию, объявления, находите полезные контакты. Ваш голос важен!",
                 url: "#",
                 available: false,
-                tags: ["#Forum", "#Announcements", "#Tips"]
+                tags: ["#Форум", "#Объявления", "#Советы"]
             },
             { 
-                label: "ECOLOGY", 
-                title: "Ecological Monitoring", 
-                desc: "Pollution levels, air quality, mutations and bio-threats.",
+                label: "ЭКОЛОГИЯ", 
+                title: "Экологический мониторинг", 
+                desc: "Уровень загрязнения, качество воздуха, мутации и био-угрозы.",
                 url: "ecology.html",
                 available: true,
-                tags: ["#Ecology", "#Pollution", "#Air"]
+                tags: ["#Экология", "#Загрязнение", "#Воздух"]
             },
             { 
-                label: "MEDIA", 
-                title: "Photo Gallery & Video", 
-                desc: "Visual materials from event locations, archival records.",
+                label: "МЕДИА", 
+                title: "Фотогалерея и видео", 
+                desc: "Визуальные материалы с мест событий, архивные записи.",
                 url: "#",
                 available: false,
-                tags: ["#Gallery", "#Video", "#Archive"]
+                tags: ["#Галерея", "#Видео", "#Архив"]
             },
             { 
-                label: "HOLO-NET", 
-                title: "Holo-Reports", 
-                desc: "Immersive reports in full immersion format.",
+                label: "ГОЛО-СЕТЬ", 
+                title: "Голо-репортажи", 
+                desc: "Иммерсивные репортажи в формате полного погружения.",
                 url: "reports.html",
                 available: true,
-                tags: ["#HoloReports", "#Immersive", "#VR"]
+                tags: ["#ГолоРепортажи", "#Иммерсивно", "#VR"]
             }
         ];
 
@@ -993,6 +993,8 @@
                 timeElement.innerHTML = `<span class="status-dot"></span> UPDATED: ${formatted}`;
             }
         }
+
+// Замените в index.html блок <script> с checkAuth на этот:
 
         function checkAuth() {
             const profileButton = document.getElementById('profileButton');
