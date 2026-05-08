@@ -23,7 +23,7 @@
         }
 
         .container {
-            max-width: 420px;
+            max-width: 480px;
             width: 100%;
             background: rgba(10, 8, 14, 0.9);
             padding: 2rem;
@@ -57,7 +57,7 @@
             text-transform: uppercase;
         }
 
-        input, textarea {
+        input {
             width: 100%;
             padding: 0.8rem 1rem;
             background: rgba(18, 14, 22, 0.9);
@@ -68,13 +68,8 @@
             outline: none;
         }
 
-        input:focus, textarea:focus {
+        input:focus {
             border-color: #bc5a7a;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 70px;
         }
 
         button {
@@ -103,61 +98,79 @@
             margin: 0.5rem 0;
         }
 
-        .success {
-            color: #6a9a5a;
+        .users-list {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: rgba(30, 18, 26, 0.4);
+            border-radius: 1rem;
         }
 
-        .toggle-link {
-            text-align: center;
-            margin-top: 1rem;
+        .user-select {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            background: rgba(18, 14, 22, 0.6);
+            border-radius: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .toggle-link a {
+        .user-select:hover {
+            background: rgba(100, 40, 60, 0.4);
+            transform: translateX(4px);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a2a4a, #3a1a28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .user-username {
+            font-size: 0.7rem;
+            color: #a07085;
+        }
+
+        .user-role {
+            font-size: 0.6rem;
             color: #bc5a7a;
-            text-decoration: none;
-            font-size: 0.85rem;
         }
 
-        .toggle-link a:hover {
-            text-decoration: underline;
-        }
-
-        .demo-hint {
+        .or-divider {
             text-align: center;
             color: #604050;
+            margin: 1rem 0;
             font-size: 0.7rem;
-            margin-top: 1rem;
-        }
-
-        .suggestions {
-            margin-top: 0.5rem;
-            padding: 0.5rem;
-            background: rgba(30, 18, 26, 0.6);
-            border-radius: 0.8rem;
-            display: none;
-        }
-
-        .suggestions span {
-            display: inline-block;
-            background: rgba(100, 40, 60, 0.5);
-            padding: 0.2rem 0.6rem;
-            border-radius: 1rem;
-            margin: 0.2rem;
-            font-size: 0.75rem;
-            cursor: pointer;
-            font-family: monospace;
-        }
-
-        .suggestions span:hover {
-            background: #9e3b5c;
         }
     </style>
 </head>
 <body>
-    <div class="container" id="loginForm">
+    <div class="container">
         <h1>ДОСТУП<span style="color:#c5457a">.</span></h1>
-        <div class="subtitle">вход в киберпространство</div>
+        <div class="subtitle">киберпространство ждёт</div>
+        
         <div class="error" id="loginError"></div>
+        
+        <div class="users-list" id="usersList"></div>
+        
+        <div class="or-divider">━━━ или введите логин вручную ━━━</div>
+        
         <div class="form-group">
             <label>@юзернейм</label>
             <input type="text" id="username" placeholder="ваш идентификатор">
@@ -167,39 +180,15 @@
             <input type="password" id="password" placeholder="••••••••">
         </div>
         <button onclick="handleLogin()">Войти</button>
-        <div class="toggle-link"><a href="#" onclick="showRegister()">→ создать аккаунт</a></div>
-        <div class="demo-hint">тест: @demo / demo123</div>
-    </div>
-
-    <div class="container" id="registerForm" style="display:none">
-        <h1>РЕГИСТРАЦИЯ<span style="color:#c5457a">.</span></h1>
-        <div class="subtitle">новый идентификатор</div>
-        <div class="error" id="registerError"></div>
-        <div class="form-group">
-            <label>@юзернейм</label>
-            <input type="text" id="regUsername" placeholder="только буквы, цифры, _">
-            <div class="suggestions" id="suggestions"></div>
+        
+        <div class="or-divider" style="margin-top:1.5rem">доступные аккаунты</div>
+        <div style="font-size:0.7rem; color:#604050; text-align:center">
+            moder | bio | nath | lacey_off | flint | picdez | mr.Lewis | lolitaа
         </div>
-        <div class="form-group">
-            <label>пароль</label>
-            <input type="password" id="regPassword" placeholder="мин. 4 символа">
-        </div>
-        <div class="form-group">
-            <label>отображаемое имя</label>
-            <input type="text" id="regDisplayName" placeholder="как вас называть">
-        </div>
-        <div class="form-group">
-            <label>о себе</label>
-            <textarea id="regBio" placeholder="расскажите о себе..."></textarea>
-        </div>
-        <button onclick="handleRegister()">Создать аккаунт</button>
-        <div class="toggle-link"><a href="#" onclick="showLogin()">← уже есть аккаунт</a></div>
     </div>
 
     <script src="js/auth.js"></script>
     <script>
-        let timeout;
-
         async function handleLogin() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
@@ -209,6 +198,8 @@
                 errorDiv.textContent = 'заполните все поля';
                 return;
             }
+            
+            errorDiv.textContent = 'Проверка...';
             
             const result = await AuthManager.login(username, password);
             
@@ -220,83 +211,55 @@
             window.location.href = 'profile.html';
         }
 
-        async function handleRegister() {
-            const username = document.getElementById('regUsername').value.trim();
-            const password = document.getElementById('regPassword').value.trim();
-            const displayName = document.getElementById('regDisplayName').value.trim();
-            const bio = document.getElementById('regBio').value.trim();
-            const errorDiv = document.getElementById('registerError');
+        function renderUsersList() {
+            const users = AuthManager.getAllUsers();
+            const container = document.getElementById('usersList');
             
-            if (!username || !password || !displayName) {
-                errorDiv.textContent = 'заполните все поля';
-                return;
-            }
+            if (!container) return;
             
-            const result = await AuthManager.register(username, password, displayName, bio);
+            container.innerHTML = '<div style="font-size:0.7rem; color:#c497aa; margin-bottom:0.5rem">▼ выберите аккаунт</div>';
             
-            if (!result.success) {
-                if (result.suggestions) {
-                    errorDiv.innerHTML = `${result.error}<br>попробуйте: ${result.suggestions.map(s => s).join(', ')}`;
-                } else {
-                    errorDiv.textContent = result.error;
-                }
-                return;
-            }
-            
-            errorDiv.style.color = '#6a9a5a';
-            errorDiv.textContent = 'Успешно! Вход...';
-            
-            setTimeout(async () => {
-                await AuthManager.login(username, password);
-                window.location.href = 'profile.html';
-            }, 1000);
-        }
-
-        async function checkUsername() {
-            const username = document.getElementById('regUsername').value.trim();
-            const suggestionsDiv = document.getElementById('suggestions');
-            
-            if (username.length < 3) {
-                suggestionsDiv.style.display = 'none';
-                return;
-            }
-            
-            if (AuthManager.isUsernameAvailable(username)) {
-                suggestionsDiv.style.display = 'none';
-            } else {
-                const suggestions = AuthManager.generateUsernameSuggestions(username);
-                suggestionsDiv.innerHTML = '<span>' + suggestions.join('</span> <span>') + '</span>';
-                suggestionsDiv.style.display = 'block';
+            users.forEach(user => {
+                const div = document.createElement('div');
+                div.className = 'user-select';
+                div.onclick = () => {
+                    document.getElementById('username').value = user.username;
+                    document.getElementById('password').focus();
+                };
                 
-                document.querySelectorAll('#suggestions span').forEach(span => {
-                    span.onclick = () => {
-                        document.getElementById('regUsername').value = span.textContent;
-                        suggestionsDiv.style.display = 'none';
-                    };
-                });
-            }
+                const initial = (user.display_name || user.username).charAt(0).toUpperCase();
+                
+                div.innerHTML = `
+                    <div class="user-avatar">${initial}</div>
+                    <div class="user-info">
+                        <div class="user-name">${escapeHtml(user.display_name || user.username)}</div>
+                        <div class="user-username">@${escapeHtml(user.username)}</div>
+                        <div class="user-role">${user.role === 'admin' ? 'администратор' : 'пользователь'}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
 
-        function showRegister() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'block';
-        }
-
-        function showLogin() {
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('loginForm').style.display = 'block';
-        }
-
-        document.getElementById('regUsername')?.addEventListener('input', () => {
-            clearTimeout(timeout);
-            timeout = setTimeout(checkUsername, 300);
-        });
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            await AuthManager.createDemoUser();
+        document.addEventListener('DOMContentLoaded', () => {
+            renderUsersList();
+            
             const session = AuthManager.loadSession();
-            if (session?.active_user) window.location.href = 'profile.html';
-            else document.getElementById('username').focus();
+            if (session?.active_user) {
+                window.location.href = 'profile.html';
+            } else {
+                document.getElementById('username').focus();
+            }
         });
 
         document.getElementById('password')?.addEventListener('keypress', (e) => {
